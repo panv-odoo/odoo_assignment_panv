@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="inherit_stock_picking_batch_form" model="ir.ui.view">
+    <field name="name">stock_picking_batch_form</field>
+    <field name="model">stock.picking.batch</field>
+    <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='scheduled_date']" position="after">
+        <field name="vehicle_id" />
+        <field name="category_id" />
+        <field name="weight" widget="progressbar" invisible="not category_id" />
+        <field name="volume" widget="progressbar" invisible="not category_id" />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
+    <field name="view_mode">tree,kanban,form,graph</field>
+  </record>
+
+  <record id="stock_picking_batch_view_graph" model="ir.ui.view">
+    <field name="name">stock_picking_batch_graph.view</field>
+    <field name="model">stock.picking.batch</field>
+    <field name="arch" type="xml">
+      <graph string="Inventory" type="bar">
+        <field name="scheduled_date" interval='day'/>
+        <field name="category_id" />
+        <field name="picking_ids" />
+      </graph>
+    </field>
+  </record>
+
+</odoo>
