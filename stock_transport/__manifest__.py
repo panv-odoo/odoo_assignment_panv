@@ -1,7 +1,7 @@
 {
     'name': "Stock Trasport",
     'version': '1.0',
-    'depends': ['base','mail','fleet','stock_picking_batch'],
+    'depends': ['base','mail','fleet','stock_picking_batch' ],
     'author': "PANV-ODOO",
     'category': 'Stock Transport/Transport',
     'description': """

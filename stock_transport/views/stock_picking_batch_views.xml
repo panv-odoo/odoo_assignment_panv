@@ -9,14 +9,22 @@
       <xpath expr="//field[@name='scheduled_date']" position="after">
         <field name="vehicle_id" />
         <field name="category_id" />
-        <field name="weight" widget="progressbar" invisible="not category_id" />
-        <field name="volume" widget="progressbar" invisible="not category_id" />
+        <label for="weight" invisible="not category_id"> Weight </label>
+        <div class="o_row">
+          <field name="total_weight" nolabel="1" readonly="1" invisible="not category_id"/>kg.
+          <field name="weight" widget="progressbar" invisible="not category_id" />
+        </div>
+        <label for="volume" invisible="not category_id"> Volume </label>
+        <div class="o_row">
+          <field name="total_volume" nolabel="1" readonly="1" invisible="not category_id"/>m³
+          <field name="volume" widget="progressbar" invisible="not category_id" />
+        </div>
       </xpath>
     </field>
   </record>
 
   <record id="stock_picking_batch.stock_picking_batch_action" model="ir.actions.act_window">
-    <field name="view_mode">tree,kanban,form,graph</field>
+    <field name="view_mode">tree,kanban,form,graph,gantt</field>
   </record>
 
   <record id="stock_picking_batch_view_graph" model="ir.ui.view">
@@ -24,10 +32,25 @@
     <field name="model">stock.picking.batch</field>
     <field name="arch" type="xml">
       <graph string="Inventory" type="bar">
-        <field name="scheduled_date" interval='day'/>
+        <field name="scheduled_date" interval='day' />
         <field name="category_id" />
-        <field name="picking_ids" />
+        <field name="no_of_transfer" />
+        <field name="no_of_lines" />
       </graph>
+    </field>
+  </record>
+
+  <record id="stock_picking_batch_view_gantt" model="ir.ui.view">
+    <field name="name">stock.picking.batch.view.gantt</field>
+    <field name="model">stock.picking.batch</field>
+    <field name="arch" type="xml">
+      <gantt string="Inventory Batch: Gantt" date_start="scheduled_date" date_stop="stop_date"
+        default_group_by="vehicle_id"
+        decoration-info="state == 'draft'" decoration-success="state == 'done'" color="vehicle_id">
+        <field name="display_name" />
+        <field name="vehicle_id" />
+        <field name="state" invisible="1" />
+      </gantt>
     </field>
   </record>
 
